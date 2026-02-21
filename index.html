@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sindhu AI Infinity 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, #000000, #1a001f, #000000);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #00ffcc;
+    text-align: center;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.container {
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
+    animation: fadeIn 2s ease-in-out;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background: #ff007f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input {
+    padding: 10px;
+    width: 70%;
+}
+
+.hidden { display: none; }
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+.glitch {
+    animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(2px, 0); }
+    50% { transform: translate(-2px, 0); }
+    100% { transform: translate(0, 0); }
+}
+
+.heart {
+    position: fixed;
+    color: #ff007f;
+    font-size: 20px;
+    animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+
+#photo {
+    width: 220px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 20px #ff007f;
+}
+
+.loadingBar {
+    width: 0%;
+    height: 5px;
+    background: #ff007f;
+    transition: width 3s;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="loadingBar" id="loadingBar"></div>
+
+<div class="container">
+
+<h2 id="status">Booting Sindhu AI Infinity...</h2>
+
+<div id="chatSection">
+<p id="chatText"></p>
+<input type="text" id="userInput">
+<br>
+<button onclick="nextStep()">Submit</button>
+</div>
+
+<div id="codeSection" class="hidden">
+<p>Final Secret Code Required 👀</p>
+<input type="text" id="codeInput">
+<br>
+<button onclick="checkCode()">Unlock</button>
+<p id="codeMsg"></p>
+</div>
+
+<div id="finalSection" class="hidden">
+<h2 id="finalTitle"></h2>
+<img src="./image.jpeg" id="photo" alt="Sindhu Photo" >
+<p id="finalMessage"></p>
+</div>
+
+</div>
+
+<audio id="bgMusic" loop>
+<source src="YOUR_SONG.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// MATRIX EFFECT
+let canvas = document.getElementById("matrix");
+let ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+let letters = "01SINDHUBRITTO❤️";
+letters = letters.split("");
+let fontSize = 14;
+let columns = canvas.width/fontSize;
+let drops = [];
+for(let x=0; x<columns; x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#0F0";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0;
+drops[i]++;
+}
+}
+setInterval(draw,33);
+
+// LOADING BAR
+setTimeout(()=>{document.getElementById("loadingBar").style.width="100%";},500);
+
+function speak(text){
+let msg=new SpeechSynthesisUtterance(text);
+msg.pitch = 1.2;
+msg.rate = 0.9;
+speechSynthesis.speak(msg);
+}
+
+let step=0;
+let attempts=0;
+
+document.getElementById("chatText").innerText="AI: What word do you shout at Britto daily?";
+speak("What word do you shout at Britto daily?");
+
+function nextStep(){
+let input=document.getElementById("userInput").value.toLowerCase();
+
+if(step===0){
+if(input.includes("mairndi")){
+step++;
+document.getElementById("chatText").innerText="AI: Gossip level from 1 to 100?";
+speak("Gossip level from 1 to 100?");
+}else{
+document.getElementById("chatText").innerHTML="<span class='glitch'>ACCESS DENIED ⚠</span>";
+}
+}
+else if(step===1){
+step++;
+document.getElementById("chatSection").classList.add("hidden");
+document.getElementById("codeSection").classList.remove("hidden");
+speak("Final secret code required.");
+}
+
+document.getElementById("userInput").value="";
+}
+
+function checkCode(){
+let code=document.getElementById("codeInput").value.toLowerCase();
+attempts++;
+
+if(code==="su mu"){
+systemTakeover();
+}
+else if(attempts>=3){
+document.getElementById("codeMsg").innerHTML=
+"You failed 3 attempts 😏<br>Buy Britto a chocolate 🍫<br><button onclick='systemTakeover()'>Fine Unlock</button>";
+}
+else{
+document.getElementById("codeMsg").innerHTML="<span class='glitch'>ACCESS DENIED ⚠</span>";
+}
+}
+
+function systemTakeover(){
+document.body.style.background="#ff007f";
+setTimeout(()=>{
+document.body.style.background="black";
+showFinal();
+},1500);
+}
+
+function showFinal(){
+document.getElementById("codeSection").classList.add("hidden");
+document.getElementById("finalSection").classList.remove("hidden");
+document.getElementById("bgMusic").play();
+createHearts();
+
+document.getElementById("finalTitle").innerText="SYSTEM HACKED BY LOVE 💖";
+
+let message=`Sindhu 💖
+
+Teasing Level: Extreme 😜
+Gossip Power: Unlimited 😂
+Care for Brother: Infinite ❤️
+
+No matter how much you call me Mairndi,
+I will always be eager for the gossips you tell.
+
+Even if systems crash...
+Even if passwords fail...
+
+I will always protect you,
+support you,
+and stand beside you forever 💕`;
+
+typeWriter(message);
+speak("System analysis complete. Infinite love detected.");
+}
+
+function typeWriter(text){
+let i=0;
+let speed=40;
+function typing(){
+if(i<text.length){
+document.getElementById("finalMessage").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,speed);
+}
+}
+typing();
+}
+
+function createHearts(){
+for(let i=0;i<60;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+2)+"s";
+document.body.appendChild(heart);
+}
+}
+</script>
+
+</body>
+</html>
